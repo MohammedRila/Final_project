@@ -31,9 +31,9 @@ export function Header() {
       {/* Desktop Header */}
       <header className="fixed w-full bg-white shadow-md z-50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center py-4">
-            <div className="flex w-full md:w-auto justify-between md:justify-start items-center">
-              {/* Logo section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 items-center py-3">
+            {/* Logo section - left column */}
+            <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center space-x-2">
                 <div className="h-10 w-10 rounded-full bg-primary-700 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,7 +47,7 @@ export function Header() {
               {isMobile && (
                 <button 
                   onClick={toggleMobileMenu} 
-                  className="lg:hidden text-neutral-700 focus:outline-none"
+                  className="ml-auto text-neutral-700 focus:outline-none"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -56,9 +56,9 @@ export function Header() {
               )}
             </div>
             
-            {/* Desktop navigation - properly centered */}
+            {/* Navigation - middle column */}
             {!isMobile && (
-              <nav className="flex-1 flex justify-center items-center space-x-8 mx-auto my-4 md:my-0">
+              <nav className="flex justify-center items-center space-x-6">
                 <Link href="/" className="text-primary-800 font-medium hover:text-primary-600 transition-colors px-1 py-2 border-b-2 border-primary-600">Home</Link>
                 <Link href="/dashboard" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors px-1 py-2 border-b-2 border-transparent hover:border-primary-600">Dashboard</Link>
                 <a href="#about" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors px-1 py-2 border-b-2 border-transparent hover:border-primary-600">About</a>
@@ -98,18 +98,20 @@ export function Header() {
               </nav>
             )}
             
-            {/* Download guide button */}
+            {/* Download guide button - right column */}
             {!isMobile && (
-              <a 
-                href="/static/assets/Phishing Website Identification.pdf" 
-                download="phishing-protection-guide" 
-                className="flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-md transition-colors shadow-md"
-              >
-                <span>Download Guide</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-              </a>
+              <div className="flex justify-center md:justify-end">
+                <a 
+                  href="/static/assets/Phishing Website Identification.pdf" 
+                  download="phishing-protection-guide" 
+                  className="flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-md transition-colors shadow-md"
+                >
+                  <span>Download Guide</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </a>
+              </div>
             )}
           </div>
         </div>
