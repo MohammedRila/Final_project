@@ -163,10 +163,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     console.log('WebSocket client connected');
     
     // Send initial scan history on connection
-    ws.send(JSON.stringify({
-      type: 'history',
-      data: scanHistory
-    }));
+    try {
+      ws.send(JSON.stringify({
+        type: 'history',
+        data: scanHistory
+      }));
+    } catch (error) {
+      console.error('Error sending initial history:', error);
+    }
     
     ws.on('message', async (message) => {
       try {

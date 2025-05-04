@@ -41,18 +41,35 @@ export default function Dashboard() {
   useEffect(() => {
     let wsRetryTimeout: NodeJS.Timeout;
     let isComponentMounted = true;
+    let reconnectAttempts = 0;
+    const MAX_RECONNECT_ATTEMPTS = 5;
 
     const connectWebSocket = () => {
       try {
+        if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+          console.log("Maximum reconnection attempts reached, stopped trying");
+          return;
+        }
+        
+        // Clear any existing socket
+        if (socket) {
+          try {
+            socket.close();
+          } catch (err) {
+            // Ignore errors when closing existing socket
+          }
+        }
+        
         const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
         const wsUrl = `${protocol}//${window.location.host}/ws`;
         
-        console.log("Attempting to connect WebSocket to:", wsUrl);
+        console.log(`Attempting to connect WebSocket to: ${wsUrl} (Attempt ${reconnectAttempts + 1})`);
         const newSocket = new WebSocket(wsUrl);
 
         newSocket.onopen = () => {
           if (!isComponentMounted) return;
           setWsConnected(true);
+          reconnectAttempts = 0; // Reset counter on successful connection
           console.log("WebSocket connected successfully");
         };
 
@@ -84,15 +101,21 @@ export default function Dashboard() {
         newSocket.onclose = () => {
           if (!isComponentMounted) return;
           setWsConnected(false);
-          console.log("WebSocket disconnected, will retry in 3 seconds");
+          reconnectAttempts += 1;
+          console.log(`WebSocket disconnected, will retry in 3 seconds (Attempt ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`);
           
-          // Try to reconnect after 3 seconds
-          wsRetryTimeout = setTimeout(() => {
-            if (isComponentMounted) {
-              console.log("Attempting to reconnect WebSocket...");
-              connectWebSocket();
-            }
-          }, 3000);
+          // Try to reconnect after 3 seconds, with backoff
+          if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+            const backoffTime = Math.min(3000 * Math.pow(1.5, reconnectAttempts - 1), 10000);
+            wsRetryTimeout = setTimeout(() => {
+              if (isComponentMounted) {
+                console.log(`Attempting to reconnect WebSocket... (Attempt ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`);
+                connectWebSocket();
+              }
+            }, backoffTime);
+          } else {
+            console.log("Maximum reconnection attempts reached, stopped trying");
+          }
         };
 
         newSocket.onerror = (error) => {
