@@ -44,6 +44,20 @@ export default function Dashboard() {
     let reconnectAttempts = 0;
     const MAX_RECONNECT_ATTEMPTS = 5;
 
+    // Global error handler specifically for WebSocket errors
+    const handleGlobalError = (event: ErrorEvent) => {
+      if (event.error && event.error.toString().includes('WebSocket')) {
+        // Prevent the default error behavior for WebSocket errors
+        event.preventDefault();
+        console.error("WebSocket error intercepted:", event.error);
+        return true;
+      }
+      return false;
+    };
+    
+    // Add global error handler
+    window.addEventListener('error', handleGlobalError);
+
     const connectWebSocket = () => {
       try {
         if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
@@ -143,8 +157,15 @@ export default function Dashboard() {
       isComponentMounted = false;
       clearTimeout(wsRetryTimeout);
       
+      // Remove event listener
+      window.removeEventListener('error', handleGlobalError);
+      
       if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.close();
+        try {
+          socket.close();
+        } catch (error) {
+          console.error("Error closing WebSocket:", error);
+        }
       }
     };
   }, []);
