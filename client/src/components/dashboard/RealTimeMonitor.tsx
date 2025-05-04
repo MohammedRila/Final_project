@@ -25,13 +25,22 @@ export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
   }, [scans]);
 
   function formatTime(timestamp: number) {
-    const date = new Date(timestamp);
-    return new Intl.DateTimeFormat('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    }).format(date);
+    try {
+      const date = new Date(timestamp);
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+        return 'Invalid time';
+      }
+      return new Intl.DateTimeFormat('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      }).format(date);
+    } catch (error) {
+      console.error('Error formatting time:', error);
+      return 'Error formatting time';
+    }
   }
 
   function getDomainFromUrl(url: string) {

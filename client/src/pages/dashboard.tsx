@@ -39,40 +39,89 @@ export default function Dashboard() {
 
   // Connect to the WebSocket server when the component mounts
   useEffect(() => {
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${window.location.host}/ws`;
-    const newSocket = new WebSocket(wsUrl);
+    let wsRetryTimeout: NodeJS.Timeout;
+    let isComponentMounted = true;
 
-    newSocket.onopen = () => {
-      setWsConnected(true);
-      console.log("WebSocket connected");
-    };
-
-    newSocket.onmessage = (event) => {
+    const connectWebSocket = () => {
       try {
-        const scanData = JSON.parse(event.data) as ScanHistoryItem;
-        setScanHistory(prevHistory => [scanData, ...prevHistory]);
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+        const wsUrl = `${protocol}//${window.location.host}/ws`;
+        
+        console.log("Attempting to connect WebSocket to:", wsUrl);
+        const newSocket = new WebSocket(wsUrl);
+
+        newSocket.onopen = () => {
+          if (!isComponentMounted) return;
+          setWsConnected(true);
+          console.log("WebSocket connected successfully");
+        };
+
+        newSocket.onmessage = (event) => {
+          if (!isComponentMounted) return;
+          try {
+            // Parse the message data
+            const data = JSON.parse(event.data);
+            
+            // Check if it's a single scan or a batch
+            if (data.type === 'new-scan' && data.data) {
+              // It's a single new scan
+              const scanData = data.data as ScanHistoryItem;
+              setScanHistory(prevHistory => [scanData, ...prevHistory]);
+            } else if (data.type === 'history' && Array.isArray(data.data)) {
+              // It's a batch of history items
+              const historyData = data.data as ScanHistoryItem[];
+              setScanHistory(historyData);
+            } else {
+              // Direct scan data format (fallback for compatibility)
+              const scanData = data as ScanHistoryItem;
+              setScanHistory(prevHistory => [scanData, ...prevHistory]);
+            }
+          } catch (error) {
+            console.error("Error parsing WebSocket message:", error);
+          }
+        };
+
+        newSocket.onclose = () => {
+          if (!isComponentMounted) return;
+          setWsConnected(false);
+          console.log("WebSocket disconnected, will retry in 3 seconds");
+          
+          // Try to reconnect after 3 seconds
+          wsRetryTimeout = setTimeout(() => {
+            if (isComponentMounted) {
+              console.log("Attempting to reconnect WebSocket...");
+              connectWebSocket();
+            }
+          }, 3000);
+        };
+
+        newSocket.onerror = (error) => {
+          if (!isComponentMounted) return;
+          console.error("WebSocket error:", error);
+          setWsConnected(false);
+        };
+
+        setSocket(newSocket);
       } catch (error) {
-        console.error("Error parsing WebSocket message:", error);
+        console.error("Error establishing WebSocket connection:", error);
+        if (isComponentMounted) {
+          setWsConnected(false);
+          // Try to reconnect after 3 seconds
+          wsRetryTimeout = setTimeout(connectWebSocket, 3000);
+        }
       }
     };
 
-    newSocket.onclose = () => {
-      setWsConnected(false);
-      console.log("WebSocket disconnected");
-    };
+    // Initial connection
+    connectWebSocket();
 
-    newSocket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      setWsConnected(false);
-    };
-
-    setSocket(newSocket);
-
-    // Clean up the WebSocket connection when the component unmounts
+    // Clean up function
     return () => {
-      if (newSocket.readyState === WebSocket.OPEN) {
-        newSocket.close();
+      isComponentMounted = false;
+      clearTimeout(wsRetryTimeout);
+      
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
       }
     };
   }, []);

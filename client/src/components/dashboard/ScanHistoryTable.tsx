@@ -15,15 +15,24 @@ interface ScanHistoryTableProps {
 
 export function ScanHistoryTable({ scans }: ScanHistoryTableProps) {
   function formatTimestamp(timestamp: number) {
-    const date = new Date(timestamp);
-    return new Intl.DateTimeFormat('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-      month: 'short',
-      day: 'numeric'
-    }).format(date);
+    try {
+      const date = new Date(timestamp);
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+        return 'Invalid date';
+      }
+      return new Intl.DateTimeFormat('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        month: 'short',
+        day: 'numeric'
+      }).format(date);
+    } catch (error) {
+      console.error('Error formatting timestamp:', error);
+      return 'Error formatting date';
+    }
   }
 
   function truncateUrl(url: string, maxLength = 50) {
