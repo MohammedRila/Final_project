@@ -1,4 +1,4 @@
 @echo off
 echo Starting PhishHook AI application...
-python run_app.py
+python run_phishhook.py
 pause

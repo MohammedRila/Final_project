@@ -14,7 +14,7 @@ This folder contains scripts to easily run the PhishHook AI application with a s
 1. Double-click on `run_app.bat` file
 2. Or open a command prompt in this directory and run:
    ```
-   python run_app.py
+   python run_phishhook.py
    ```
 
 ### macOS/Linux
@@ -31,7 +31,7 @@ This folder contains scripts to easily run the PhishHook AI application with a s
    
 2. Alternatively, run directly with Python:
    ```
-   python3 run_app.py
+   python3 run_phishhook.py
    ```
 
 ## What the Launcher Does
@@ -70,7 +70,7 @@ Add this to your `.vscode/tasks.json` file:
       "label": "Run PhishHook AI",
       "type": "shell",
       "command": "python",
-      "args": ["run_app.py"],
+      "args": ["run_phishhook.py"],
       "isBackground": true,
       "problemMatcher": []
     }

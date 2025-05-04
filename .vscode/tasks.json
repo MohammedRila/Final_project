@@ -5,7 +5,7 @@
       "label": "Run PhishHook AI",
       "type": "shell",
       "command": "python",
-      "args": ["run_app.py"],
+      "args": ["run_phishhook.py"],
       "isBackground": true,
       "problemMatcher": [],
       "presentation": {

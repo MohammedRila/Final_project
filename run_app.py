@@ -85,9 +85,14 @@ def run_application():
         def cleanup():
             if server_process.poll() is None:
                 print(f"\n{Colors.YELLOW}Shutting down server...{Colors.ENDC}")
+                # Handle platform-specific termination
                 if platform.system() == "Windows":
-                    server_process.send_signal(signal.CTRL_C_EVENT)
+                    # On Windows, gracefully terminate the process
+                    import ctypes
+                    kernel32 = ctypes.WinDLL('kernel32')
+                    kernel32.GenerateConsoleCtrlEvent(0, server_process.pid)
                 else:
+                    # On Unix systems, send SIGTERM
                     server_process.send_signal(signal.SIGTERM)
                 server_process.wait(timeout=5)
                 print(f"{Colors.GREEN}Server shutdown complete.{Colors.ENDC}")
@@ -113,7 +118,7 @@ def run_application():
             sys.exit(1)
         
         # Open browser
-        url = "http://localhost:3000"
+        url = "http://localhost:5000"
         print(f"{Colors.GREEN}Server is running! Opening {url} in your browser...{Colors.ENDC}")
         webbrowser.open(url)
         
