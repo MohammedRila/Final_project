@@ -32,13 +32,7 @@ export function CallToAction() {
             </div>
           </div>
           
-          <div className="w-full lg:w-1/2 mt-8 lg:mt-0 flex justify-center">
-            <img 
-              src="/static/assets/img/cta-shield.svg" 
-              alt="Security protection illustration" 
-              className="w-full max-w-md h-auto animate-fadeIn"
-            />
-          </div>
+          {/* Image removed as requested */}
         </div>
       </div>
     </section>
