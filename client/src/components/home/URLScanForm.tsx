@@ -92,7 +92,9 @@ export function URLScanForm({ onScanComplete }: URLScanFormProps = {}) {
               />
               {isValidUrl && (
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <i className="fas fa-check-circle text-success-500 text-lg"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-success-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
               )}
             </div>
@@ -131,7 +133,9 @@ export function URLScanForm({ onScanComplete }: URLScanFormProps = {}) {
             <div className="rounded-md border border-success-500 bg-success-50 p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <i className="fas fa-shield-check text-success-500 text-xl"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-success-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
                 </div>
                 <div className="ml-3">
                   <h3 className="text-success-700 font-medium">URL is Safe</h3>
@@ -155,7 +159,9 @@ export function URLScanForm({ onScanComplete }: URLScanFormProps = {}) {
             <div className="rounded-md border border-danger-500 bg-danger-50 p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <i className="fas fa-exclamation-triangle text-danger-500 text-xl"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-danger-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
                 </div>
                 <div className="ml-3">
                   <h3 className="text-danger-700 font-medium">Warning: Potentially Unsafe</h3>
