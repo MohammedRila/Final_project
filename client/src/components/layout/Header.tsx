@@ -54,6 +54,7 @@ export function Header() {
             {!isMobile && (
               <nav className="flex items-center space-x-8">
                 <Link href="/" className="text-primary-800 font-medium hover:text-primary-600 transition-colors px-1 py-2 border-b-2 border-primary-600">Home</Link>
+                <Link href="/dashboard" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors px-1 py-2">Dashboard</Link>
                 <a href="#about" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors px-1 py-2">About</a>
                 <Link href="/usecases" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors px-1 py-2">Use Cases</Link>
                 
@@ -125,6 +126,7 @@ export function Header() {
             
             <nav className="flex flex-col space-y-4">
               <Link href="/" className="text-primary-800 font-medium hover:text-primary-600 transition-colors py-2 border-b border-gray-100" onClick={closeMobileMenu}>Home</Link>
+              <Link href="/dashboard" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors py-2 border-b border-gray-100" onClick={closeMobileMenu}>Dashboard</Link>
               <a href="#about" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors py-2 border-b border-gray-100" onClick={closeMobileMenu}>About</a>
               <Link href="/usecases" className="text-neutral-700 font-medium hover:text-primary-600 transition-colors py-2 border-b border-gray-100" onClick={closeMobileMenu}>Use Cases</Link>
               
