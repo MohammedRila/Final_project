@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circle background -->
+  <circle cx="100" cy="100" r="90" fill="#dbeafe" />
+  
+  <!-- Link symbol -->
+  <g transform="translate(50, 50) scale(1.7)">
+    <path d="M25,15 L15,25 A10,10 0 0,1 0,10 A10,10 0 0,1 15,0 L25,10" stroke="#3b82f6" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M25,35 L35,25 A10,10 0 0,1 50,40 A10,10 0 0,1 35,50 L25,40" stroke="#3b82f6" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20,30 L35,15" stroke="#3b82f6" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  
+  <!-- Magnifying glass -->
+  <g transform="translate(120, 70) rotate(45)">
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#1e3a8a" stroke-width="6" />
+    <line x1="0" y1="25" x2="0" y2="50" stroke="#1e3a8a" stroke-width="6" stroke-linecap="round" />
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circle background -->
+  <circle cx="100" cy="100" r="90" fill="#dbeafe" />
+  
+  <!-- Code brackets -->
+  <g transform="translate(50, 50)">
+    <path d="M20,0 L0,50 L20,100" stroke="#3b82f6" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M80,0 L100,50 L80,100" stroke="#3b82f6" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Code lines -->
+    <line x1="30" y1="25" x2="70" y2="25" stroke="#1e3a8a" stroke-width="5" stroke-linecap="round" />
+    <line x1="35" y1="50" x2="65" y2="50" stroke="#1e3a8a" stroke-width="5" stroke-linecap="round" />
+    <line x1="30" y1="75" x2="70" y2="75" stroke="#1e3a8a" stroke-width="5" stroke-linecap="round" />
+  </g>
+  
+  <!-- Scanner line -->
+  <g>
+    <rect x="45" y="40" width="110" height="120" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-dasharray="5,5" rx="5" ry="5" />
+    <line x1="45" y1="90" x2="155" y2="90" stroke="#ef4444" stroke-width="2" />
+    <circle cx="45" cy="90" r="5" fill="#ef4444" />
+    <circle cx="155" cy="90" r="5" fill="#ef4444" />
+  </g>
+</svg>
