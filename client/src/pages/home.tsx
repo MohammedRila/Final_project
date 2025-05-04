@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
 import { About } from "@/components/home/About";
+import { AboutPhishHook } from "@/components/home/AboutPhishHook";
 import { Features } from "@/components/home/Features";
 import { CallToAction } from "@/components/home/CallToAction";
 
@@ -11,8 +12,9 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <About />
+        <AboutPhishHook />
         <Features />
+        <About />
         <CallToAction />
       </main>
       <Footer />

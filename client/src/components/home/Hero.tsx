@@ -18,9 +18,9 @@ export function Hero() {
           
           <div className="w-full md:w-1/2" data-aos="fade-left">
             <img 
-              src="/static/assets/img/Phishing.gif" 
+              src="/static/assets/img/phishing-illustration.svg" 
               alt="Phishing protection illustration" 
-              className="w-full h-auto rounded-lg shadow-lg"
+              className="w-full h-auto rounded-lg shadow-lg animate-fadeIn"
             />
           </div>
         </div>

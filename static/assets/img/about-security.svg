@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f8faff" rx="10" ry="10"/>
+  
+  <!-- Laptop -->
+  <g transform="translate(70, 90)">
+    <!-- Screen -->
+    <rect x="0" y="0" width="280" height="180" rx="8" ry="8" fill="#3b82f6"/>
+    <rect x="10" y="10" width="260" height="160" rx="3" ry="3" fill="#ffffff"/>
+    
+    <!-- Screen content - browser window with lock icon -->
+    <rect x="20" y="20" width="240" height="15" rx="2" ry="2" fill="#f1f5f9"/>
+    <circle cx="28" cy="27.5" r="3.5" fill="#ef4444"/>
+    <circle cx="40" cy="27.5" r="3.5" fill="#f59e0b"/>
+    <circle cx="52" cy="27.5" r="3.5" fill="#22c55e"/>
+    
+    <rect x="20" y="40" width="240" height="20" rx="2" ry="2" fill="#f1f5f9"/>
+    <circle cx="35" cy="50" r="6" fill="#22c55e"/>
+    <path d="M35,47 L35,50 M33,50 L37,50" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="50" y="44" width="170" height="12" rx="2" ry="2" fill="#e2e8f0"/>
+    
+    <!-- Security badge in content -->
+    <g transform="translate(100, 90)">
+      <path d="M40,0 L80,15 L80,45 A40,40 0 0,1 40,85 A40,40 0 0,1 0,45 L0,15 Z" fill="#22c55e" fillOpacity="0.8"/>
+      <path d="M30,45 L35,50 L50,35" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    
+    <!-- Base -->
+    <path d="M0,180 L-30,220 L310,220 L280,180 Z" fill="#3b82f6"/>
+    <rect x="-20" y="220" width="320" height="10" rx="5" ry="5" fill="#3b82f6"/>
+  </g>
+  
+  <!-- Shield with AI circuitry -->
+  <g transform="translate(380, 70)">
+    <!-- Shield -->
+    <path d="M100,0 L200,40 L200,120 A100,100 0 0,1 100,220 A100,100 0 0,1 0,120 L0,40 Z" fill="#3b82f6" fillOpacity="0.6"/>
+    
+    <!-- AI circuitry pattern -->
+    <g fill="none" stroke="#1e3a8a" stroke-width="3">
+      <circle cx="100" cy="100" r="50" strokeDasharray="5,5"/>
+      <circle cx="100" cy="100" r="70" strokeDasharray="5,5"/>
+      
+      <line x1="50" y1="40" x2="150" y2="40"/>
+      <line x1="50" y1="40" x2="50" y2="80"/>
+      <line x1="150" y1="40" x2="150" y2="80"/>
+      
+      <line x1="30" y1="120" x2="80" y2="120"/>
+      <line x1="120" y1="120" x2="170" y2="120"/>
+      
+      <line x1="60" y1="160" x2="140" y2="160"/>
+      <line x1="60" y1="160" x2="60" y2="190"/>
+      <line x1="140" y1="160" x2="140" y2="190"/>
+      
+      <!-- Connection nodes -->
+      <circle cx="50" cy="40" r="5" fill="#1e3a8a"/>
+      <circle cx="150" cy="40" r="5" fill="#1e3a8a"/>
+      <circle cx="50" cy="80" r="5" fill="#1e3a8a"/>
+      <circle cx="150" cy="80" r="5" fill="#1e3a8a"/>
+      <circle cx="30" cy="120" r="5" fill="#1e3a8a"/>
+      <circle cx="80" cy="120" r="5" fill="#1e3a8a"/>
+      <circle cx="120" cy="120" r="5" fill="#1e3a8a"/>
+      <circle cx="170" cy="120" r="5" fill="#1e3a8a"/>
+      <circle cx="60" cy="160" r="5" fill="#1e3a8a"/>
+      <circle cx="140" cy="160" r="5" fill="#1e3a8a"/>
+      <circle cx="60" cy="190" r="5" fill="#1e3a8a"/>
+      <circle cx="140" cy="190" r="5" fill="#1e3a8a"/>
+      
+      <!-- AI center -->
+      <circle cx="100" cy="100" r="20" fill="#1e3a8a" fillOpacity="0.3"/>
+      <text x="100" y="105" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e3a8a">AI</text>
+    </g>
+  </g>
+  
+  <!-- Data flow lines connecting laptop to shield -->
+  <g stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,5" fill="none">
+    <path d="M350,150 C380,130 400,120 420,130" />
+    <path d="M350,170 C380,180 400,190 420,170" />
+    <path d="M350,190 C380,200 400,210 420,200" />
+  </g>
+  
+  <!-- Small devices with security -->
+  <g transform="translate(150, 340)">
+    <!-- Mobile phone -->
+    <rect x="0" y="0" width="30" height="50" rx="5" ry="5" fill="#3b82f6" />
+    <rect x="5" y="5" width="20" height="35" rx="2" ry="2" fill="#ffffff" />
+    <circle cx="15" cy="45" r="2" fill="#ffffff" />
+    
+    <!-- Shield on mobile -->
+    <path d="M15,15 L25,20 L25,30 A10,10 0 0,1 15,40 A10,10 0 0,1 5,30 L5,20 Z" fill="#22c55e" fillOpacity="0.8" />
+    <path d="M12,25 L15,28 L20,23" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  
+  <g transform="translate(420, 340)">
+    <!-- Tablet -->
+    <rect x="0" y="0" width="60" height="45" rx="5" ry="5" fill="#3b82f6" />
+    <rect x="5" y="5" width="50" height="35" rx="2" ry="2" fill="#ffffff" />
+    <circle cx="30" cy="42.5" r="1.5" fill="#ffffff" />
+    
+    <!-- Shield on tablet -->
+    <path d="M30,15 L45,20 L45,30 A15,15 0 0,1 30,45 A15,15 0 0,1 15,30 L15,20 Z" fill="#22c55e" fillOpacity="0.8" transform="scale(0.6) translate(25, 10)" />
+    <path d="M27,25 L30,28 L35,23" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>
