@@ -51,7 +51,8 @@ def run_application():
     
     try:
         # Start the development server
-        print(f"{Colors.GREEN}Starting PhishHook AI server...{Colors.ENDC}")
+        print(f"{Colors.GREEN}Starting PhishHook AI server with command: '{npm_cmd} run dev'{Colors.ENDC}")
+        print(f"{Colors.YELLOW}This will run both the backend API and frontend development server{Colors.ENDC}")
         server_process = subprocess.Popen(
             [npm_cmd, "run", "dev"],
             cwd=project_dir,
