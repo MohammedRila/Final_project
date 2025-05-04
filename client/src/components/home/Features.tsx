@@ -8,41 +8,35 @@ export function Features() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Feature 1 */}
           <div className="bg-white rounded-lg shadow-md p-6 transition-transform duration-300 hover:-translate-y-2">
-            <div className="flex justify-center mb-4">
-              <img 
-                src="/static/assets/img/url-analysis.svg" 
-                alt="URL Analysis" 
-                className="h-20 w-20"
-              />
+            <div className="text-primary-700 text-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
             </div>
-            <h3 className="font-heading font-semibold text-xl mb-3 text-center">URL Analysis</h3>
-            <p className="text-neutral-700">Examines URL structure, domain age, SSL certificates, and redirects to identify suspicious patterns.</p>
+            <h3 className="font-heading font-semibold text-2xl mb-4 text-center text-primary-800">URL Analysis</h3>
+            <p className="text-neutral-700 text-center">Examines URL structure, domain age, SSL certificates, and redirects to identify suspicious patterns.</p>
           </div>
           
           {/* Feature 2 */}
           <div className="bg-white rounded-lg shadow-md p-6 transition-transform duration-300 hover:-translate-y-2">
-            <div className="flex justify-center mb-4">
-              <img 
-                src="/static/assets/img/content-verification.svg" 
-                alt="Content Verification" 
-                className="h-20 w-20"
-              />
+            <div className="text-primary-700 text-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
             </div>
-            <h3 className="font-heading font-semibold text-xl mb-3 text-center">Content Verification</h3>
-            <p className="text-neutral-700">Analyzes website content, looking for suspicious forms, scripts, and visual elements that mimic legitimate sites.</p>
+            <h3 className="font-heading font-semibold text-2xl mb-4 text-center text-primary-800">Content Verification</h3>
+            <p className="text-neutral-700 text-center">Analyzes website content, looking for suspicious forms, scripts, and visual elements that mimic legitimate sites.</p>
           </div>
           
           {/* Feature 3 */}
           <div className="bg-white rounded-lg shadow-md p-6 transition-transform duration-300 hover:-translate-y-2">
-            <div className="flex justify-center mb-4">
-              <img 
-                src="/static/assets/img/real-time-protection.svg" 
-                alt="Real-time Protection" 
-                className="h-20 w-20"
-              />
+            <div className="text-primary-700 text-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </div>
-            <h3 className="font-heading font-semibold text-xl mb-3 text-center">Real-time Protection</h3>
-            <p className="text-neutral-700">Cross-references with database of known phishing sites and provides instant feedback on potential threats.</p>
+            <h3 className="font-heading font-semibold text-2xl mb-4 text-center text-primary-800">Real-time Protection</h3>
+            <p className="text-neutral-700 text-center">Cross-references with database of known phishing sites and provides instant feedback on potential threats.</p>
           </div>
         </div>
       </div>
