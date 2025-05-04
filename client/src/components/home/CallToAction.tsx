@@ -19,9 +19,7 @@ export function CallToAction() {
                 className="bg-white hover:bg-gray-100 text-primary-800 font-medium px-6 py-3 rounded-md transition-colors shadow-md flex items-center justify-center"
               >
                 <span>Scan a URL Now</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                <i className="fas fa-arrow-right ml-2"></i>
               </button>
               <a 
                 href="/static/assets/Phishing Website Identification.pdf" 
@@ -29,9 +27,7 @@ export function CallToAction() {
                 className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-6 py-3 rounded-md transition-colors shadow-md flex items-center justify-center gap-2"
               >
                 <span>Download Guide</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                <i className="fas fa-download"></i>
               </a>
             </div>
           </div>
