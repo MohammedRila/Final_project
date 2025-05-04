@@ -7,9 +7,14 @@ interface ScanResult {
   url: string;
   isSafe: boolean;
   message: string;
+  timestamp?: number;
 }
 
-export function URLScanForm() {
+interface URLScanFormProps {
+  onScanComplete?: (scanResult: ScanResult) => void;
+}
+
+export function URLScanForm({ onScanComplete }: URLScanFormProps = {}) {
   const [url, setUrl] = useState('');
   const [isValidUrl, setIsValidUrl] = useState<boolean | null>(null);
   const { toast } = useToast();
@@ -18,6 +23,12 @@ export function URLScanForm() {
     mutationFn: async (urlToScan: string): Promise<ScanResult> => {
       const response = await apiRequest('POST', '/api/scan', { url: urlToScan });
       return response.json();
+    },
+    onSuccess: (data) => {
+      // Call the callback if provided
+      if (onScanComplete) {
+        onScanComplete(data);
+      }
     },
     onError: (error) => {
       toast({

@@ -78,8 +78,14 @@ export default function Dashboard() {
   }, []);
 
   // Handle a new scan submission
-  const handleScan = (scanResult: ScanHistoryItem) => {
-    setScanHistory(prevHistory => [scanResult, ...prevHistory]);
+  const handleScan = (scanResult: any) => {
+    // Ensure timestamp is included
+    const resultWithTimestamp = {
+      ...scanResult,
+      timestamp: scanResult.timestamp || Date.now()
+    } as ScanHistoryItem;
+    
+    setScanHistory(prevHistory => [resultWithTimestamp, ...prevHistory]);
   };
 
   return (
