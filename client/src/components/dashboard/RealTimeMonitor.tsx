@@ -1,4 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { AlertCircle, CheckCircle, Clock } from "lucide-react";
 
 interface ScanHistoryItem {
   timestamp: number;
@@ -12,78 +16,87 @@ interface RealTimeMonitorProps {
 }
 
 export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Scroll to bottom on new updates
+  const [recentScans, setRecentScans] = useState<ScanHistoryItem[]>([]);
+
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
+    // Get the 10 most recent scans
+    const sortedScans = [...scans].sort((a, b) => b.timestamp - a.timestamp).slice(0, 10);
+    setRecentScans(sortedScans);
   }, [scans]);
 
   function formatTime(timestamp: number) {
     const date = new Date(timestamp);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    return new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    }).format(date);
   }
 
   function getDomainFromUrl(url: string) {
     try {
       const urlObj = new URL(url);
       return urlObj.hostname;
-    } catch (error) {
+    } catch (e) {
       return url;
     }
   }
 
-  if (scans.length === 0) {
-    return (
-      <div className="h-80 flex items-center justify-center text-neutral-500">
-        <div className="text-center">
-          <i className="fas fa-radar text-2xl mb-3 opacity-30"></i>
-          <p>Waiting for real-time activity</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div 
-      ref={containerRef}
-      className="h-80 overflow-y-auto border border-neutral-200 rounded-md bg-neutral-50"
-    >
-      <div className="px-4 py-3 border-b border-neutral-200 bg-white">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-neutral-600">Real-Time Log</span>
-          <span className="text-xs bg-primary-100 text-primary-800 px-2 py-1 rounded-full">Live</span>
-        </div>
-      </div>
-      
-      <div className="divide-y divide-neutral-100">
-        {scans.map((scan, index) => (
-          <div key={index} className="p-3 text-sm animate-fadeIn">
-            <div className="flex items-start">
-              <div className={`w-2 h-2 rounded-full mt-1.5 mr-2 ${scan.isSafe ? 'bg-success-500' : 'bg-danger-500'}`}></div>
-              <div className="flex-1 overflow-hidden">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-neutral-800 truncate">
-                    {getDomainFromUrl(scan.url)}
-                  </span>
-                  <span className="text-xs text-neutral-500 whitespace-nowrap ml-2">
-                    {formatTime(scan.timestamp)}
-                  </span>
-                </div>
-                <p className="text-xs text-neutral-600 truncate mt-1" title={scan.message}>
-                  {scan.isSafe ? 
-                    <span className="text-success-700">✓ Safe - </span> : 
-                    <span className="text-danger-700">⚠ Phishing - </span>
-                  }
-                  {scan.message}
-                </p>
-              </div>
+    <Card className="col-span-4 sm:col-span-2">
+      <CardHeader>
+        <CardTitle className="text-xl font-bold">Real-Time Monitoring</CardTitle>
+        <CardDescription>
+          Live feed of URL scan activities
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea className="h-[350px] pr-4">
+          {recentScans.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground">
+              <Clock className="h-10 w-10 mb-2 text-muted-foreground/60" />
+              <p>No recent scan activity.</p>
+              <p className="text-sm">Scan a URL to see real-time results.</p>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
+          ) : (
+            <div className="space-y-4">
+              {recentScans.map((scan, index) => (
+                <div 
+                  key={scan.timestamp + index}
+                  className="flex items-start space-x-3 p-3 rounded-md border animate-fadeIn"
+                >
+                  {scan.isSafe ? (
+                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  ) : (
+                    <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                  )}
+                  <div className="flex-1 space-y-1 overflow-hidden">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium truncate text-sm" title={scan.url}>
+                        {getDomainFromUrl(scan.url)}
+                      </p>
+                      <span className="text-xs text-muted-foreground">
+                        {formatTime(scan.timestamp)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground line-clamp-2">
+                      {scan.message}
+                    </p>
+                    <div>
+                      {scan.isSafe ? (
+                        <Badge className="bg-green-500 hover:bg-green-600 text-xs">Safe</Badge>
+                      ) : (
+                        <Badge variant="destructive" className="text-xs">Suspicious</Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </ScrollArea>
+      </CardContent>
+    </Card>
   );
 }

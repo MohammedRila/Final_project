@@ -1,3 +1,5 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AlertCircle, BarChart3, CheckCircle, Shield, TrendingDown, TrendingUp } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface StatCardProps {
@@ -11,25 +13,36 @@ interface StatCardProps {
 
 function StatCard({ title, value, description, icon, trend, className }: StatCardProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-neutral-200 p-5 ${className}`}>
-      <div className="flex justify-between items-start">
-        <div>
-          <h3 className="text-sm font-medium text-neutral-500">{title}</h3>
-          <div className="mt-1 flex items-baseline">
-            <p className="text-2xl font-semibold text-neutral-900">{value}</p>
-            {trend && (
-              <p className={`ml-2 text-xs font-medium ${trend.value >= 0 ? 'text-success-600' : 'text-danger-600'}`}>
-                {trend.value >= 0 ? '↑' : '↓'} {Math.abs(trend.value)}%
-              </p>
-            )}
-          </div>
-          {description && <p className="mt-1 text-sm text-neutral-500">{description}</p>}
-        </div>
-        <div className="p-3 rounded-full bg-primary-50 text-primary-700">
+    <Card className={className}>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">
+          {title}
+        </CardTitle>
+        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
           {icon}
         </div>
-      </div>
-    </div>
+      </CardHeader>
+      <CardContent>
+        <div className="text-2xl font-bold">{value}</div>
+        {description && (
+          <p className="text-xs text-muted-foreground">
+            {description}
+          </p>
+        )}
+        {trend && (
+          <div className="flex items-center pt-1 space-x-1">
+            {trend.value > 0 ? (
+              <TrendingUp className="h-3 w-3 text-green-500" />
+            ) : (
+              <TrendingDown className="h-3 w-3 text-red-500" />
+            )}
+            <span className={`text-xs ${trend.value > 0 ? 'text-green-500' : 'text-red-500'}`}>
+              {Math.abs(trend.value)}% {trend.label}
+            </span>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -49,47 +62,93 @@ interface StatCardsProps {
 }
 
 export function StatCards({ stats, isLoading }: StatCardsProps) {
-  if (isLoading || !stats) {
+  if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white rounded-lg shadow-sm border border-neutral-200 p-5">
-            <Skeleton className="h-4 w-24 mb-2" />
-            <Skeleton className="h-8 w-16 mb-2" />
-            <Skeleton className="h-4 w-32" />
-          </div>
-        ))}
+      <>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">
+              <Skeleton className="h-4 w-[150px]" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-8 w-[100px] mb-2" />
+            <Skeleton className="h-3 w-[170px]" />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">
+              <Skeleton className="h-4 w-[150px]" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-8 w-[100px] mb-2" />
+            <Skeleton className="h-3 w-[170px]" />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">
+              <Skeleton className="h-4 w-[150px]" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-8 w-[100px] mb-2" />
+            <Skeleton className="h-3 w-[170px]" />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">
+              <Skeleton className="h-4 w-[150px]" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-8 w-[100px] mb-2" />
+            <Skeleton className="h-3 w-[170px]" />
+          </CardContent>
+        </Card>
+      </>
+    );
+  }
+
+  if (!stats) {
+    return (
+      <div className="col-span-4 py-10 text-center text-muted-foreground">
+        Failed to load statistics. Please try refreshing the page.
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <>
       <StatCard
-        title="Total URL Scans"
+        title="Total Scans"
         value={stats.totalScans}
-        icon={<i className="fas fa-search text-lg"></i>}
+        description="Total URLs analyzed"
+        icon={<BarChart3 className="h-4 w-4" />}
       />
       <StatCard
-        title="Safe URLs Detected"
+        title="Safe URLs"
         value={stats.safeScans}
-        description={`${stats.safePercentage}% of total scans`}
-        icon={<i className="fas fa-shield-alt text-lg"></i>}
-        className="border-l-4 border-l-success-500"
+        description={`${stats.safePercentage} of all scans`}
+        icon={<CheckCircle className="h-4 w-4" />}
+        trend={stats.totalScans > 0 ? { value: 100 * stats.safeScans / stats.totalScans, label: "safe rate" } : undefined}
       />
       <StatCard
-        title="Phishing URLs Detected"
+        title="Phishing URLs"
         value={stats.phishingScans}
-        description={`${stats.phishingPercentage}% of total scans`}
-        icon={<i className="fas fa-exclamation-triangle text-lg"></i>}
-        className="border-l-4 border-l-danger-500"
+        description={`${stats.phishingPercentage} of all scans`}
+        icon={<AlertCircle className="h-4 w-4" />}
+        trend={stats.totalScans > 0 ? { value: -100 * stats.phishingScans / stats.totalScans, label: "detection rate" } : undefined}
       />
       <StatCard
-        title="Total URLs in Database"
+        title="Database Coverage"
         value={stats.knownLegitimateUrls + stats.knownPhishingUrls}
-        description={`${stats.knownLegitimateUrls} safe, ${stats.knownPhishingUrls} phishing`}
-        icon={<i className="fas fa-database text-lg"></i>}
+        description={`${stats.knownLegitimateUrls} safe + ${stats.knownPhishingUrls} phishing URLs`}
+        icon={<Shield className="h-4 w-4" />}
       />
-    </div>
+    </>
   );
 }

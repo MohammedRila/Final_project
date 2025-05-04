@@ -1,111 +1,112 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { Helmet } from 'react-helmet';
+import { Container } from "@/components/ui/container";
 import { ScanHistoryTable } from "@/components/dashboard/ScanHistoryTable";
 import { StatCards } from "@/components/dashboard/StatCards";
 import { RealTimeMonitor } from "@/components/dashboard/RealTimeMonitor";
+import { URLScanForm } from "@/components/home/URLScanForm";
+import { getQueryFn } from "@/lib/queryClient";
+
+interface ScanHistoryItem {
+  timestamp: number;
+  url: string;
+  isSafe: boolean;
+  message: string;
+}
+
+interface StatsData {
+  totalScans: number;
+  safeScans: number;
+  phishingScans: number;
+  safePercentage: string;
+  phishingPercentage: string;
+  knownLegitimateUrls: number;
+  knownPhishingUrls: number;
+}
 
 export default function Dashboard() {
+  const [scanHistory, setScanHistory] = useState<ScanHistoryItem[]>([]);
   const [wsConnected, setWsConnected] = useState(false);
-  const [scanHistory, setScanHistory] = useState<any[]>([]);
-  
-  // Fetch initial stats
-  const { data: stats, isLoading: statsLoading } = useQuery({
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+
+  // Query to get stats data
+  const { data: stats, isLoading } = useQuery({
     queryKey: ['/api/stats'],
-    refetchInterval: 30000 // Refresh every 30 seconds
+    queryFn: getQueryFn({ on401: 'returnNull' }),
+    refetchInterval: 10000, // Refresh every 10 seconds
   });
-  
-  // Websocket connection for real-time updates
+
+  // Connect to the WebSocket server when the component mounts
   useEffect(() => {
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const wsUrl = `${protocol}//${window.location.host}/ws`;
-    const socket = new WebSocket(wsUrl);
-    
-    socket.onopen = () => {
-      console.log("WebSocket connected");
+    const newSocket = new WebSocket(wsUrl);
+
+    newSocket.onopen = () => {
       setWsConnected(true);
+      console.log("WebSocket connected");
     };
-    
-    socket.onclose = () => {
-      console.log("WebSocket disconnected");
-      setWsConnected(false);
-      
-      // Try to reconnect after a delay
-      setTimeout(() => {
-        // The useEffect cleanup will close the old socket
-        // and this effect will run again to create a new one
-      }, 3000);
-    };
-    
-    socket.onmessage = (event) => {
+
+    newSocket.onmessage = (event) => {
       try {
-        const message = JSON.parse(event.data);
-        
-        // Handle incoming messages based on type
-        if (message.type === 'history') {
-          setScanHistory(message.data);
-        } else if (message.type === 'new-scan') {
-          setScanHistory(prev => {
-            const newHistory = [message.data, ...prev];
-            return newHistory.slice(0, 100); // Keep at most 100 items
-          });
-        }
+        const scanData = JSON.parse(event.data) as ScanHistoryItem;
+        setScanHistory(prevHistory => [scanData, ...prevHistory]);
       } catch (error) {
         console.error("Error parsing WebSocket message:", error);
       }
     };
-    
+
+    newSocket.onclose = () => {
+      setWsConnected(false);
+      console.log("WebSocket disconnected");
+    };
+
+    newSocket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+      setWsConnected(false);
+    };
+
+    setSocket(newSocket);
+
+    // Clean up the WebSocket connection when the component unmounts
     return () => {
-      socket.close();
+      if (newSocket.readyState === WebSocket.OPEN) {
+        newSocket.close();
+      }
     };
   }, []);
 
+  // Handle a new scan submission
+  const handleScan = (scanResult: ScanHistoryItem) => {
+    setScanHistory(prevHistory => [scanResult, ...prevHistory]);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-50">
-      <Header />
-      <main className="flex-grow py-8 px-4 md:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-6">
-            <h1 className="text-3xl font-heading font-bold text-neutral-900">Dashboard</h1>
-            <p className="text-neutral-600 mt-2">
-              Monitor phishing detection activity and view real-time statistics
-            </p>
-          </div>
-          
-          {/* Connection status indicator */}
-          <div className="mb-6">
-            <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm ${wsConnected ? 'bg-success-50 text-success-700' : 'bg-danger-50 text-danger-700'}`}>
-              <div className={`w-2 h-2 rounded-full mr-2 ${wsConnected ? 'bg-success-500' : 'bg-danger-500'}`}></div>
-              <span>{wsConnected ? 'Connected to real-time updates' : 'Connecting to real-time updates...'}</span>
-            </div>
-          </div>
-          
-          {/* Stats cards */}
-          <div className="mb-8">
-            <StatCards stats={stats} isLoading={statsLoading} />
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Real-time monitor */}
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-5">
-                <h2 className="text-xl font-heading font-semibold mb-4">Real-Time Activity</h2>
-                <RealTimeMonitor scans={scanHistory.slice(0, 10)} />
-              </div>
-            </div>
-            
-            {/* Scan history table */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-5">
-                <h2 className="text-xl font-heading font-semibold mb-4">Recent Scan History</h2>
-                <ScanHistoryTable scans={scanHistory} />
-              </div>
-            </div>
-          </div>
+    <>
+      <Helmet>
+        <title>Dashboard | PhishHook AI</title>
+      </Helmet>
+      <Container className="py-8">
+        <div className="mb-8">
+          <URLScanForm onScanComplete={handleScan} />
         </div>
-      </main>
-      <Footer />
-    </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <StatCards stats={stats as StatsData | undefined} isLoading={isLoading} />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <RealTimeMonitor scans={scanHistory} />
+          <ScanHistoryTable scans={scanHistory} />
+        </div>
+
+        {!wsConnected && (
+          <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md text-yellow-700 text-sm">
+            <strong>Note:</strong> Real-time updates are not currently available. Some features may be limited.
+          </div>
+        )}
+      </Container>
+    </>
   );
 }
