@@ -20,35 +20,39 @@ export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
 
   useEffect(() => {
     // Get the 10 most recent scans
-    const sortedScans = [...scans].sort((a, b) => b.timestamp - a.timestamp).slice(0, 10);
+    const sortedScans = [...scans]
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, 10);
     setRecentScans(sortedScans);
   }, [scans]);
 
   function formatTime(timestamp: number) {
     try {
       const date = new Date(timestamp);
-      // Check if the date is valid
       if (isNaN(date.getTime())) {
-        return 'Invalid time';
+        console.warn(`Invalid timestamp: ${timestamp}`); // Log the problematic timestamp
+        return "Invalid time";
       }
-      return new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
+      return new Intl.DateTimeFormat("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
       }).format(date);
     } catch (error) {
-      console.error('Error formatting time:', error);
-      return 'Error formatting time';
+      console.error("Error formatting time:", error, "Timestamp:", timestamp);
+      return "Error formatting time";
     }
   }
 
   function getDomainFromUrl(url: string) {
     try {
+      if (!url || typeof url !== "string") throw new Error("Invalid URL");
       const urlObj = new URL(url);
       return urlObj.hostname;
-    } catch (e) {
-      return url;
+    } catch (error) {
+      console.warn(`Failed to parse URL: ${url}`, error); // Log the problematic URL
+      return "Invalid URL";
     }
   }
 
@@ -56,9 +60,7 @@ export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
     <Card className="col-span-4 sm:col-span-2">
       <CardHeader>
         <CardTitle className="text-xl font-bold">Real-Time Monitoring</CardTitle>
-        <CardDescription>
-          Live feed of URL scan activities
-        </CardDescription>
+        <CardDescription>Live feed of URL scan activities</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[350px] pr-4">
@@ -71,8 +73,8 @@ export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
           ) : (
             <div className="space-y-4">
               {recentScans.map((scan, index) => (
-                <div 
-                  key={scan.timestamp + index}
+                <div
+                  key={`${scan.url}-${scan.timestamp}-${index}`} // Improved key to use URL and timestamp
                   className="flex items-start space-x-3 p-3 rounded-md border animate-fadeIn"
                 >
                   {scan.isSafe ? (
@@ -82,7 +84,10 @@ export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
                   )}
                   <div className="flex-1 space-y-1 overflow-hidden">
                     <div className="flex items-center justify-between">
-                      <p className="font-medium truncate text-sm" title={scan.url}>
+                      <p
+                        className="font-medium truncate text-sm"
+                        title={scan.url}
+                      >
                         {getDomainFromUrl(scan.url)}
                       </p>
                       <span className="text-xs text-muted-foreground">
@@ -94,9 +99,13 @@ export function RealTimeMonitor({ scans }: RealTimeMonitorProps) {
                     </p>
                     <div>
                       {scan.isSafe ? (
-                        <Badge className="bg-green-500 hover:bg-green-600 text-xs">Safe</Badge>
+                        <Badge className="bg-green-500 hover:bg-green-600 text-xs">
+                          Safe
+                        </Badge>
                       ) : (
-                        <Badge variant="destructive" className="text-xs">Suspicious</Badge>
+                        <Badge variant="destructive" className="text-xs">
+                          Suspicious
+                        </Badge>
                       )}
                     </div>
                   </div>

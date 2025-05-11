@@ -29,7 +29,7 @@ export function Header() {
   return (
     <>
       {/* Desktop Header */}
-      <header className="fixed w-full bg-white shadow-md z-50">
+      <header className="fixed top-0 w-full bg-white shadow-md z-50">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center py-4">
             <div className="flex w-full md:w-auto justify-between md:justify-start items-center">
@@ -56,7 +56,7 @@ export function Header() {
               )}
             </div>
             
-            {/* Desktop navigation - properly centered */}
+            {/* Desktop navigation */}
             {!isMobile && (
               <nav className="flex-1 flex justify-center items-center space-x-8 mx-auto my-4 md:my-0">
                 <Link href="/" className="text-primary-800 font-medium hover:text-primary-600 transition-colors px-1 py-2 border-b-2 border-primary-600">Home</Link>

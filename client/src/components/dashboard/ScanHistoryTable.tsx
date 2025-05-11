@@ -17,27 +17,32 @@ export function ScanHistoryTable({ scans }: ScanHistoryTableProps) {
   function formatTimestamp(timestamp: number) {
     try {
       const date = new Date(timestamp);
-      // Check if the date is valid
       if (isNaN(date.getTime())) {
-        return 'Invalid date';
+        console.warn(`Invalid timestamp provided: ${timestamp}`);
+        return "Invalid date";
       }
-      return new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
+      return new Intl.DateTimeFormat("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
         hour12: true,
-        month: 'short',
-        day: 'numeric'
+        month: "short",
+        day: "numeric",
       }).format(date);
     } catch (error) {
-      console.error('Error formatting timestamp:', error);
-      return 'Error formatting date';
+      console.error("Error formatting timestamp:", error, "Timestamp:", timestamp);
+      return "Error formatting date";
     }
   }
 
   function truncateUrl(url: string, maxLength = 50) {
-    if (url.length <= maxLength) return url;
-    return url.substring(0, maxLength) + '...';
+    if (!url || typeof url !== "string") {
+      return "Invalid URL";
+    }
+    if (url.length <= maxLength) {
+      return url;
+    }
+    return url.substring(0, maxLength) + "...";
   }
 
   return (
@@ -67,21 +72,25 @@ export function ScanHistoryTable({ scans }: ScanHistoryTableProps) {
                   </TableCell>
                 </TableRow>
               ) : (
-                scans.map((scan, index) => (
-                  <TableRow key={scan.timestamp + index}>
+                scans.map((scan) => (
+                  <TableRow key={`${scan.url}-${scan.timestamp}`}>
                     <TableCell className="font-mono text-xs">
                       {formatTimestamp(scan.timestamp)}
                     </TableCell>
                     <TableCell className="max-w-[300px] truncate font-mono text-xs">
-                      <a 
-                        href={scan.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-blue-500 hover:text-blue-700 hover:underline"
-                        title={scan.url}
-                      >
-                        {truncateUrl(scan.url)}
-                      </a>
+                      {scan.url ? (
+                        <a 
+                          href={scan.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:text-blue-700 hover:underline"
+                          title={scan.url}
+                        >
+                          {truncateUrl(scan.url)}
+                        </a>
+                      ) : (
+                        <span className="text-muted-foreground">No URL</span>
+                      )}
                     </TableCell>
                     <TableCell className="text-center">
                       {scan.isSafe ? (

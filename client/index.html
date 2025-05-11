@@ -3,24 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>PhishHook AI - Protect Yourself from Phishing Attacks</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Removed FontAwesome CDN since we're using inline SVGs -->
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font Imports -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- SEO Metadata -->
+    <meta name="description" content="PhishHook AI provides advanced tools to protect against phishing attacks. Stay safe online with our state-of-the-art phishing detection technology." />
+    <meta property="og:title" content="PhishHook AI - Protect Yourself from Phishing Attacks" />
+    <meta property="og:description" content="Stay safe online with PhishHook AI's advanced phishing detection tools." />
+    <meta property="og:image" content="/static/assets/social-preview.png" />
+    <meta property="og:url" content="https://yourdomain.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PhishHook AI - Protect Yourself from Phishing Attacks" />
+    <meta name="twitter:description" content="Stay safe online with PhishHook AI's advanced phishing detection tools." />
+    <meta name="twitter:image" content="/static/assets/social-preview.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/static/assets/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/static/assets/apple-touch-icon.png" />
+
+    <!-- Theme Colors for Mobile Browsers -->
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    <link rel="preload" href="/static/assets/social-preview.png" as="image" />
+
+    <!-- JavaScript Error Handling -->
     <script>
-      // Handle Vite HMR WebSocket errors
-      window.addEventListener('error', function(event) {
-        if (event.error && event.error.toString().includes('WebSocket')) {
-          console.warn('Vite HMR WebSocket error detected and suppressed:', event.error);
-          event.preventDefault();
-          return true;
-        }
-      });
+      // Development-only: Suppress Vite HMR WebSocket errors
+      if (process.env.NODE_ENV === "development") {
+        window.addEventListener("error", function (event) {
+          if (event.error && event.error.toString().includes("WebSocket")) {
+            console.warn("Vite HMR WebSocket error detected and suppressed:", event.error);
+            event.preventDefault();
+            return true;
+          }
+        });
+      }
     </script>
   </head>
   <body>
+    <!-- Root Element for React -->
     <div id="root"></div>
+
+    <!-- JavaScript Fallback -->
+    <noscript>
+      <p>This application requires JavaScript to run. Please enable JavaScript in your browser.</p>
+    </noscript>
+
+    <!-- Main Application Script -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

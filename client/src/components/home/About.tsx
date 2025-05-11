@@ -8,13 +8,16 @@ const faqItems = [
     content: (
       <>
         <p className="text-neutral-700">
-          Phishing is a cybercrime in which a target or targets are contacted by email, telephone, or text message by someone posing as a legitimate institution to lure individuals into providing sensitive data such as personally identifiable information, banking and credit card details, and passwords.
+          Phishing is a cybercrime in which a target or targets are contacted by email, telephone, or text message by 
+          someone posing as a legitimate institution to lure individuals into providing sensitive data such as 
+          personally identifiable information, banking and credit card details, and passwords.
         </p>
         <p className="text-neutral-700 mt-2">
-          Alternatively, phishing is a cyber attack where the attacker tricks the target into disclosing personal information, revealing login credentials, or transferring money.
+          Alternatively, phishing is a cyber attack where the attacker tricks the target into disclosing personal 
+          information, revealing login credentials, or transferring money.
         </p>
       </>
-    )
+    ),
   },
   {
     id: "faq-2",
@@ -23,7 +26,9 @@ const faqItems = [
     content: (
       <>
         <p className="text-neutral-700">
-          The purpose of phishing is to collect sensitive information with the intention of using that information to gain access to otherwise protected data, networks, etc. A phisher's success is contingent upon establishing trust with its victims.
+          The purpose of phishing is to collect sensitive information with the intention of using that information to 
+          gain access to otherwise protected data, networks, etc. A phisher's success is contingent upon establishing 
+          trust with its victims.
         </p>
         <p className="font-medium mt-4 mb-2">Successful phishing attacks can:</p>
         <ul className="space-y-2">
@@ -41,7 +46,7 @@ const faqItems = [
           </li>
         </ul>
       </>
-    )
+    ),
   },
   {
     id: "faq-3",
@@ -54,53 +59,72 @@ const faqItems = [
             <i className="fas fa-angle-right text-primary-600 mr-2"></i>
             Deceptive Phishing
           </h4>
-          <p className="ml-6 text-neutral-700">Deceptive phishing is by far the most common type of phishing scam. In this ploy, fraudsters impersonate a legitimate company to steal people's personal data or login credentials. Those emails frequently use threats and a sense of urgency to scare users into doing what the attackers want.</p>
+          <p className="ml-6 text-neutral-700">
+            Deceptive phishing is by far the most common type of phishing scam. In this ploy, fraudsters impersonate a 
+            legitimate company to steal people's personal data or login credentials. Those emails frequently use threats 
+            and a sense of urgency to scare users into doing what the attackers want.
+          </p>
         </div>
-        
+
         <div>
           <h4 className="font-medium flex items-center">
             <i className="fas fa-angle-right text-primary-600 mr-2"></i>
             Spear Phishing
           </h4>
-          <p className="ml-6 text-neutral-700">Spear Phishing targets specific individuals instead of a wide group of people. Attackers often research their victims on social media and other sites. That way, they can customize their communications and appear more authentic.</p>
+          <p className="ml-6 text-neutral-700">
+            Spear Phishing targets specific individuals instead of a wide group of people. Attackers often research 
+            their victims on social media and other sites. That way, they can customize their communications and appear 
+            more authentic.
+          </p>
         </div>
-        
+
         <h4 className="font-medium mt-6 mb-3">Other phishing techniques:</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="p-4 border rounded-md hover:shadow-lg transition-shadow">
             <h5 className="font-medium flex items-center">
               <i className="fas fa-angle-right text-primary-600 mr-2"></i>
               Angler Phishing
             </h5>
-            <p className="ml-6 text-sm text-neutral-700">This cyberattack comes by way of social media. It may involve fake URLs, instant messages or profiles used to obtain sensitive data.</p>
+            <p className="ml-6 text-sm text-neutral-700">
+              This cyberattack comes by way of social media. It may involve fake URLs, instant messages or profiles used 
+              to obtain sensitive data.
+            </p>
           </div>
-          
-          <div>
+
+          <div className="p-4 border rounded-md hover:shadow-lg transition-shadow">
             <h5 className="font-medium flex items-center">
               <i className="fas fa-angle-right text-primary-600 mr-2"></i>
               Clone Phishing
             </h5>
-            <p className="ml-6 text-sm text-neutral-700">Clone phishing involves exact duplication of an email to make it appear as legitimate as possible.</p>
+            <p className="ml-6 text-sm text-neutral-700">
+              Clone phishing involves exact duplication of an email to make it appear as legitimate as possible.
+            </p>
           </div>
-          
-          <div>
+
+          <div className="p-4 border rounded-md hover:shadow-lg transition-shadow">
             <h5 className="font-medium flex items-center">
               <i className="fas fa-angle-right text-primary-600 mr-2"></i>
               Domain Spoofing
             </h5>
-            <p className="ml-6 text-sm text-neutral-700">In this category of phishing, the attacker forges a company domain, which makes the email appear to be from that company.</p>
+            <p className="ml-6 text-sm text-neutral-700">
+              In this category of phishing, the attacker forges a company domain, which makes the email appear to be 
+              from that company.
+            </p>
           </div>
-          
-          <div>
+
+          <div className="p-4 border rounded-md hover:shadow-lg transition-shadow">
             <h5 className="font-medium flex items-center">
               <i className="fas fa-angle-right text-primary-600 mr-2"></i>
               Search Engine Phishing
             </h5>
-            <p className="ml-6 text-sm text-neutral-700">Rather than sending correspondence to you to gain information, search engine fishing involves creating a website that mimics a legitimate site.</p>
+            <p className="ml-6 text-sm text-neutral-700">
+              Rather than sending correspondence to you to gain information, search engine fishing involves creating a 
+              website that mimics a legitimate site.
+            </p>
           </div>
         </div>
       </div>
-    )
+    ),
   },
   {
     id: "faq-4",
@@ -109,9 +133,10 @@ const faqItems = [
     content: (
       <div className="space-y-4">
         <p className="text-neutral-700">
-          To help prevent phishing attacks, you should observe general best practices, similar to those you might undertake to avoid viruses and other malware:
+          To help prevent phishing attacks, you should observe general best practices, similar to those you might 
+          undertake to avoid viruses and other malware:
         </p>
-        
+
         <ul className="space-y-3">
           <li className="flex items-start">
             <i className="fas fa-check-circle text-success-500 mt-1 mr-3"></i>
@@ -123,7 +148,8 @@ const faqItems = [
           </li>
           <li className="flex items-start">
             <i className="fas fa-check-circle text-success-500 mt-1 mr-3"></i>
-            <span>Be cautious about clicking on links or downloading attachments in emails, especially from unknown senders</span>
+            <span>Be cautious about clicking on links or downloading attachments in emails, especially from unknown 
+              senders</span>
           </li>
           <li className="flex items-start">
             <i className="fas fa-check-circle text-success-500 mt-1 mr-3"></i>
@@ -134,30 +160,34 @@ const faqItems = [
             <span>Use our PhishHook AI tool to check suspicious URLs before visiting them</span>
           </li>
         </ul>
-        
+
         <div className="mt-4 flex justify-center">
-          <a 
-            href="/static/assets/Phishing Website Identification.pdf" 
-            download="phishing-protection-guide" 
-            className="flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-6 py-3 rounded-md transition-colors shadow-md"
+          <a
+            href="/static/assets/Phishing Website Identification.pdf"
+            download="phishing-protection-guide"
+            className="flex items-center gap-2 bg-gradient-to-r from-primary-500 to-primary-700 hover:from-primary-600 hover:to-primary-800 text-white px-6 py-3 rounded-md transition-transform transform hover:scale-105 shadow-md"
+            aria-label="Download our complete protection guide"
           >
             <span>Download Our Complete Protection Guide</span>
             <i className="fas fa-download"></i>
           </a>
         </div>
       </div>
-    )
-  }
+    ),
+  },
 ];
 
 export function About() {
   return (
-    <section id="about" className="py-16 bg-white">
+    <section id="about" className="py-16 bg-gradient-to-b from-gray-100 to-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-heading text-3xl font-bold text-center text-primary-800 mb-12">Understanding Phishing Attacks</h2>
-          
-          <AccordionFAQ items={faqItems} defaultOpen="faq-1" />
+          <h2 className="font-heading text-3xl font-bold text-center text-primary-800 mb-12">
+            Understanding Phishing Attacks
+          </h2>
+
+          {/* FAQ Accordion */}
+          <AccordionFAQ items={faqItems} />
         </div>
       </div>
     </section>
